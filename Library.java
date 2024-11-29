@@ -7,7 +7,7 @@ public class Library {
 
     // Add a new member to the library
     public boolean addMember(Member member) {
-    	if (members.size() > 0 && member.getId() == findMemberById(member.getId()).getId()) { // 4.
+    	if (members.size() > 0 && findMemberById(member.getId()) != null) { // 4., changed in 5.
     		System.out.println("Member id is already taken");
     		return false;
     	}
@@ -20,7 +20,7 @@ public class Library {
     
     // Add a new book to the library
     public boolean addBook(Book book) {
-    	if (books.size() > 0 && book.getId() == findBookById(book.getId()).getId()) { // 4.
+    	if (books.size() > 0 && findBookById(book.getId()) != null) { // 4., changed in 5.
     		System.out.println("Book id is already taken");
     		return false;
     	}
