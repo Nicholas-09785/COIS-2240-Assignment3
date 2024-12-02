@@ -10,7 +10,7 @@ public class LibraryManagement {
     private void run() {
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
-        Transaction instance = Transaction.getTransaction(); // 1.
+        Transaction instance = Transaction.getTransaction(); // Task 2 1., create singleton instance of class Transaction
 
         while (running) {
             System.out.println("===========================");
@@ -48,8 +48,15 @@ public class LibraryManagement {
                     
                     scanner.nextLine();
 
-                    Book newBook = new Book(id, title);
-                    library.addBook(newBook);
+                    // Task 3 1.
+                    try {
+                    	// Book now added as created object without variable declaration
+                    	library.addBook(new Book(id, title)); 
+                    } catch (Exception e) {
+                    	// Output message if exception occurs, telling user that ID must be between 100 and 999
+                    	System.out.println("ID must be between 100 and 999");
+                    }
+                    
                     break;
                 case 3:
                 	System.out.println("\n--- Available Members ---");
@@ -75,7 +82,7 @@ public class LibraryManagement {
                     Book book = library.findBookById(bookId);
 
                     if (member != null && book != null) {
-                    	instance.borrowBook(book, member); // 1.
+                    	instance.borrowBook(book, member); // Task 2 1., call borrowBook using singleton instance
                     } else {
                         System.out.println("Invalid member or book ID.");
                     }
@@ -93,7 +100,7 @@ public class LibraryManagement {
                     book = library.findBookById(bookId);
 
                     if (member != null && book != null) {
-                    	instance.returnBook(book, member); // 1.
+                    	instance.returnBook(book, member); // Task 2 1., call returnBook using singleton instance
                     } else {
                         System.out.println("Invalid member or book ID.");
                     }
@@ -115,7 +122,9 @@ public class LibraryManagement {
                     }
                     break;
                 case 6:
-                	instance.displayTransactionHistory();
+                	// Following line uses singleton instance displayTransactionHistory to display everything
+                	// in file called transactions.txt
+                	instance.displayTransactionHistory(); // Task 2 3.
                     break;
                 case 7:
                     System.out.println("Exiting. Good Bye..");
