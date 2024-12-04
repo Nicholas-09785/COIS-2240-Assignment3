@@ -1,5 +1,7 @@
 import static org.junit.Assert.*;
 import org.junit.Test;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Modifier;
 
 public class LibraryManagementTest {
 
@@ -79,5 +81,15 @@ public class LibraryManagementTest {
 		res = instance.returnBook(testBook, testMember); 
 		assertFalse(res);	// res being false shows that returnBook was unsuccessful on the two passed objects,
 							// due to returnBook already being called on those objects
+	}
+
+	//Task 3 3.
+	@Test
+	public void testSingletonTransaction() throws Exception {
+		Constructor<Transaction> constructor = Transaction.class.getDeclaredConstructor(); // constructor object of Constructor<Transaction>
+
+		constructor.getModifiers(); // getModifiers returns constructors modifier 2
+		assertEquals(constructor.getModifiers(), Modifier.PRIVATE); // Assert that constructor.getModifiers() returns value
+																	// equal to Modifier.PRIVATE, or 2
 	}
 }
