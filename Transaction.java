@@ -10,12 +10,14 @@ import java.io.IOException;
 public class Transaction {
 
 	// Singleton instance
-	private static Transaction instance; // 1.
+	private static Transaction instance; // Task 2 1.
 	
 	// Constructor
-	private Transaction() {} // 1.
+	private Transaction() {} // Task 2 1.
 	
-	// 1.
+	// Task 2 1.
+	// Singleton method ensures that only one instance of method
+	// may be created
 	public static Transaction getTransaction() {
 		if (instance == null)
 			instance = new Transaction();
@@ -29,7 +31,9 @@ public class Transaction {
             member.borrowBook(book); 
             String transactionDetails = getCurrentDateTime() + " - Borrowing: " + member.getName() + " borrowed " + book.getTitle();
             System.out.println(transactionDetails);
-            saveTransaction(transactionDetails); // 2.
+            
+            // Following line writes to file called transactions.txt
+            saveTransaction(transactionDetails); // Task 2 2.
             return true;
         } else {
             System.out.println("The book is not available.");
@@ -38,46 +42,55 @@ public class Transaction {
     }
 
     // Perform the returning of a book
-    public void returnBook(Book book, Member member) {
+    public boolean returnBook(Book book, Member member) { // Task 3 2., function return type changed from void to boolean
         if (member.getBorrowedBooks().contains(book)) {
             member.returnBook(book);
             book.returnBook();
             String transactionDetails = getCurrentDateTime() + " - Returning: " + member.getName() + " returned " + book.getTitle();
             System.out.println(transactionDetails);
-            saveTransaction(transactionDetails); // 2.
+            
+            // Following line writes to file called transactions.txt
+            saveTransaction(transactionDetails); // Task 2 2.
+            
+            return true; // Task 3 2.
         } else {
             System.out.println("This book was not borrowed by the member.");
+            return false; // Task 3 2.
         }
     }
     
-    // 2.
+    // Task 2 2.
     // saveTransaction saves passed parameter to transaction.txt
     private void saveTransaction(String transaction) {
     	try {
+    		// Declare variable writer that will write the parameter transaction to transactions.txt
     		BufferedWriter writer = new BufferedWriter(new FileWriter("transactions.txt", true));
-    		writer.write(transaction + "\n");
-    		writer.flush();
-    		writer.close();
+    		
+    		writer.write(transaction + "\n"); // Write transaction and \n character to indent line when finished
+    		
+    		writer.flush(); // Flush the writer to ensure buffer is empty
+    		writer.close(); // Close the writer when finished
     	} catch (IOException e) {
     		e.printStackTrace();
     	}
     }
     
-    // 3.
+    // Task 2 3.
     // displayTransactionHistory() displays everything in transactions.txt
     public void displayTransactionHistory() {
-    	File file = new File("transactions.txt");
-    	if (file.exists()) {
+    	File file = new File("transactions.txt"); // Get transactions.txt
+    	if (file.exists()) { // If transactions.txt exist, execute following code
 	    	try {
-	    		BufferedReader reader = new BufferedReader(new FileReader("transactions.txt"));
-	    		String text;
+	    		BufferedReader reader = new BufferedReader(new FileReader("transactions.txt")); // Read transactions.txt
+	    		String text; // Declare variable text for following while loop
+	    		
 	    		while ((text = reader.readLine()) != null)
-	    			System.out.println(text);
-	    		reader.close();
+	    			System.out.println(text); // Print each line in transactions.txt, while text isn't null
+	    		reader.close(); // Close reader created for reading transactions.txt
 	    	} catch (IOException e) {
 	    		e.printStackTrace();
 	    	}
-    	} else {
+    	} else { // If transactions.txt doesn't exist, print following line
     		System.out.println("No transactions have been made.");
     	}
     }
