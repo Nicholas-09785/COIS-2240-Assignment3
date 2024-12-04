@@ -11,7 +11,7 @@ public class LibraryManagement {
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
         Transaction instance = Transaction.getTransaction(); // Task 2 1., create singleton instance of class Transaction
-
+        
         while (running) {
             System.out.println("===========================");
             System.out.println("Library Management System");

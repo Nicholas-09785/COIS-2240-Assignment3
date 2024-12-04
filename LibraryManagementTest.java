@@ -40,5 +40,44 @@ public class LibraryManagementTest {
 		} catch (Exception e) {
 			assertEquals("ID must be between 100 and 999", e.getMessage());
 		}
-	}	
+	}
+	
+	// Task 3 2.
+	@Test
+	public void testBorrowReturn() throws Exception {
+		
+		// Book and Member objects declared and initialized with the following passed to their constructors
+		Book testBook = new Book(108, "Data");
+		Member testMember = new Member(19, "Jack");
+		Transaction instance = Transaction.getTransaction();	// Singleton declaration of Transaction declared
+		
+		// Shows that Book testBook is available
+		assertTrue(testBook.isAvailable());
+		
+		
+		// Call borrowBook so that testMember may borrow the Book object testBook
+		instance.borrowBook(testBook, testMember);
+		assertEquals("Data", testMember.getBorrowedBooks().get(0).getTitle()); // Borrow successful
+		
+		assertFalse(testBook.isAvailable());	// testBook returns false, due to testBook already being passed
+												// to borrowBook function with testMember
+		
+		
+		// Calls borrowBook again, and stores the result of false into boolean variable called res
+		boolean res = instance.borrowBook(testBook, testMember);
+		assertFalse(res);	// res being false shows that borrowBook was unsuccessful, or returned false
+		
+		
+		// Call returnBook on same objects used as before, called testBook and testMember, and store return value
+		// inside the variable res
+		res = instance.returnBook(testBook, testMember);
+		assertTrue(res);	// res being true shows that returnBook was successful, or returned true
+		
+		
+		// Call returnBook on same objects used as before, called testBook and testMember, and store return value
+		// inside the variable res
+		res = instance.returnBook(testBook, testMember); 
+		assertFalse(res);	// res being false shows that returnBook was unsuccessful on the two passed objects,
+							// due to returnBook already being called on those objects
+	}
 }
