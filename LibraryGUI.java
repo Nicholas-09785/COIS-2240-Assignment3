@@ -282,8 +282,11 @@ public class LibraryGUI extends Application {
         	try {
 	        	if (scene4Text1.getText().trim().equals("")) // Input box is empty on click event tells user to give input
 	        		System.out.println("Enter values");
-	        	else
+	        	else {
+	        		Member member = library.findMemberById(Integer.parseInt(scene4Text1.getText())); // Ensures exception 
+	        																						 // may be thrown
 	        		primaryStage.setScene(scene4_2);
+	        	}
         	} catch (IllegalArgumentException f) { 
         		System.out.println("Please input a number");
         	}
